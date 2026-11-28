@@ -21,8 +21,32 @@ terminator – prostokąt, magazyn danych – dwie poziome linie); przepływ ste
 | `diagramy/03_przeplyw_sterowania/cfd_4_magazyn.drawio` | przepływ sterowania – obsługa stanów magazynowych |
 | `diagramy/03_przeplyw_sterowania/cfd_5_dowoz.drawio` | przepływ sterowania – system dowozu |
 
-Diagramy są uproszczone: najwyżej 4 kroki na diagram (wyjątek: DFD poziom 0 z 5 podsystemami).
+### Moduły
 
-Terminatory: Klient, Pracownik, Menedżer, Dostawca, Kurier.
+System jest modułowy – każdy proces DFD poziomu 0 to osobny moduł, który można sprzedawać oddzielnie:
+obsługa zamówień, obsługa rezerwacji stolików, obsługa HR, obsługa stanów magazynowych, obsługa dowozu.
+Moduły zamówień i dowozu łączą się wyłącznie przez magazyn danych „Zamówienia” (dowóz jest dodatkiem
+do zamówień); moduły rezerwacji, HR i magazynu działają samodzielnie.
+
+### Założenia
+
+- Płatność przy składaniu zamówienia – potwierdzona płatność uruchamia przygotowanie w kuchni.
+- Rezerwacje przyjmuje kelner (telefon, sala) albo klient sam przez internet.
+- Kucharz zgłasza zużycie składników i gotowość zamówienia; menedżer akceptuje zamówienie towaru.
+- Gotowe zamówienie wydaje kelner (na miejscu, na wynos) albo kurier (dowóz).
+
+### Słownik
+
+Terminatory: Klient, Kelner, Kucharz, Kurier, Menedżer, Pracownik, Dostawca.
 
 Magazyny danych: Zamówienia, Rezerwacje, Pracownicy i grafik, Stany magazynowe.
+
+Przepływy danych (ta sama nazwa na każdym poziomie):
+
+| Obszar | Przepływy |
+|---|---|
+| Zamówienia | zamówienie, potwierdzenie zamówienia, płatność, rachunek, status zamówienia, zlecenie przygotowania, zgłoszenie gotowości, powiadomienie o gotowym zamówieniu |
+| Rezerwacje | zapytanie o termin, wolne stoliki, rezerwacja, potwierdzenie rezerwacji, anulowanie rezerwacji |
+| Magazyn | raport zużycia, stan magazynowy, zamówienie towaru do akceptacji, akceptacja zamówienia towaru, zamówienie towaru, dostawa |
+| HR | dane pracownika, grafik, czas pracy, raport czasu pracy |
+| Dowóz | gotowość kuriera, zlecenie dostawy, potwierdzenie doręczenia |
